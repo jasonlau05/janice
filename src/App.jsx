@@ -445,20 +445,20 @@ function BirthdayCake({ candleCount, animKey }) {
   );
 }
 
-import pk from "./Pic1/PK_DSC_0465.jpg";
-import kg from "./Pic1/KG_DSC_0102.jpg";
-import one from "./Pic1/01_DSC_0069.jpg";
-import two from "./Pic1/02_DSCN0587.jpg";
-import three from "./Pic1/03_DSCN1306.jpg";
-import four from "./Pic1/04_DSCN2691.jpg";
-import five from "./Pic1/05_DSCN3727.jpg";
-import six from "./Pic1/06_RPBI7558.jpg";
-import seven from "./Pic1/07_DSCN5609.jpg";
-import eight from "./Pic1/08_IMG_3749.jpg";
-import nine from "./Pic1/09_IMG_8729.jpg";
-import ten from "./Pic1/10_IMG_0116.jpg";
-import eleven from "./Pic1/11_IMG_9586.jpg";
-import twelve from "./Pic1/12_DSCN2247.jpg";
+import pk from "./Pic1/PK_DSC_0465.JPG";
+import kg from "./Pic1/KG_DSC_0102.JPG";
+import one from "./Pic1/01_DSC_0069.JPG";
+import two from "./Pic1/02_DSCN0587.JPG";
+import three from "./Pic1/03_DSCN1306.JPG";
+import four from "./Pic1/04_DSCN2691.JPG";
+import five from "./Pic1/05_DSCN3727.JPG";
+import six from "./Pic1/06_RPBI7558.JPG";
+import seven from "./Pic1/07_DSCN5609.JPG";
+import eight from "./Pic1/08_IMG_3749.JPG";
+import nine from "./Pic1/09_IMG_8729.JPG";
+import ten from "./Pic1/10_IMG_0116.JPG";
+import eleven from "./Pic1/11_IMG_9586.JPG";
+import twelve from "./Pic1/12_DSCN2247.JPG";
 
 /* ─────────── AGE CAROUSEL ─────────── */
 const AGES = Array.from({ length: 14 }, (_, i) => i + 4); // ages 1–20, change as needed
