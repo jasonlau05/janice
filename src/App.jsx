@@ -954,7 +954,6 @@ function About() {
       <Divider />
       <div style={{ margin:"60px 0" }}>
         <Reveal>
-          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginBottom:"16px", opacity:0.75 }}>the birthday girl</div>
           <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(2rem,5vw,3.4rem)", fontWeight:700, color:T.deep, margin:"0 0 24px", lineHeight:1.2 }}>
             A <em style={{ color:T.violet }}>bad</em> driver and a <br /><em style={{ color:T.violet }}>worse</em> passenger.
           </h2>
@@ -1016,7 +1015,7 @@ function Footer() {
           ))}
         </div>
         <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, color:T.lavender, fontSize:"0.95rem", opacity:0.8, margin:"0 0 40px", letterSpacing:"0.05em" }}>
-          Made with 💜 & claude sonnet 4.6
+          Made with 💜 (& claude sonnet 4.6)
         </p>
         <div style={{ width:"60px", height:"1px", background:T.lavender, margin:"0 auto", opacity:0.4 }} />
       </Reveal>
