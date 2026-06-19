@@ -442,27 +442,59 @@ function BirthdayCake({ candleCount, animKey }) {
   );
 }
 
-/* ─────────── AGE CAROUSEL ─────────── */
-const AGES = Array.from({ length: 20 }, (_, i) => i + 1); // ages 1–20, change as needed
+import pk from "./Pic1/PK_DSC_0465.jpg";
+import kg from "./Pic1/KG_DSC_0102.jpg";
+import one from "./Pic1/01_DSC_0069.jpg";
+import two from "./Pic1/02_DSCN0587.jpg";
+import three from "./Pic1/03_DSCN1306.jpg";
+import four from "./Pic1/04_DSCN2691.jpg";
+import five from "./Pic1/05_DSCN3727.jpg";
+import six from "./Pic1/06_RPBI7558.jpg";
+import seven from "./Pic1/07_DSCN5609.jpg";
+import eight from "./Pic1/08_IMG_3749.jpg";
+import nine from "./Pic1/09_IMG_8729.jpg";
+import ten from "./Pic1/10_IMG_0116.jpg";
+import eleven from "./Pic1/11_IMG_9586.jpg";
+import twelve from "./Pic1/12_DSCN2247.jpg";
 
+/* ─────────── AGE CAROUSEL ─────────── */
+const AGES = Array.from({ length: 14 }, (_, i) => i + 1); // ages 1–20, change as needed
+
+const AGE_PHOTOS = {
+  1: pk,
+  2: kg,
+  3: one,
+  4: two,
+  5: three,
+  6: four,
+  7: five,
+  8: six,
+  9: seven,
+  10: eight,
+  11: nine,
+  12: ten,
+  13: eleven,
+  14: twelve,
+};
+ 
 function AgeCarousel() {
   const [current, setCurrent] = useState(0);
   const [dir, setDir] = useState("right"); // slide-in direction
   const [animKey, setAnimKey] = useState(0);
   const total = AGES.length;
-
+ 
   const go = useCallback((next, direction) => {
     setDir(direction);
     setCurrent(next);
     setAnimKey(k => k + 1);
   }, []);
-
+ 
   const prev = () => go((current - 1 + total) % total, "left");
   const next = () => go((current + 1) % total, "right");
-
+ 
   const age = AGES[current];
   const slideAnim = dir === "right" ? "slideInRight" : "slideInLeft";
-
+ 
   return (
     <section style={{ padding: "100px 24px 80px", position: "relative", zIndex: 1 }}>
       <Reveal>
@@ -471,14 +503,14 @@ function AgeCarousel() {
             ✦ through the years ✦
           </div>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.9rem, 4.5vw, 3rem)", fontWeight: 700, color: T.deep, margin: 0 }}>
-            Every age, every smile
+            Chopped since '07
           </h2>
           <p style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300, color: T.violet, fontSize: "1rem", marginTop: "12px", opacity: 0.8 }}>
             Arrow through the years — a candle lights up for each one.
           </p>
         </div>
       </Reveal>
-
+ 
       <div style={{
         maxWidth: "900px",
         margin: "0 auto",
@@ -497,53 +529,19 @@ function AgeCarousel() {
             boxShadow: `0 8px 40px ${T.lavender}28`,
             textAlign: "center",
             position: "relative",
-          }}>
-            {/* age badge */}
-            <div key={`age-${animKey}`} style={{
-              position: "absolute",
-              top: "16px",
-              right: "20px",
-              width: "52px",
-              height: "52px",
-              borderRadius: "50%",
-              background: `linear-gradient(135deg, ${T.violet}, ${T.lavender})`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: `0 4px 16px ${T.violet}44`,
-              animation: "ageNum 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards",
-            }}>
-              <span style={{
-                fontFamily: "'Playfair Display', serif",
-                fontWeight: 900,
-                fontSize: age >= 10 ? "1.1rem" : "1.4rem",
-                color: T.white,
-                lineHeight: 1,
-              }}>{age}</span>
-            </div>
-
+          }}> 
             <BirthdayCake candleCount={age} animKey={animKey} />
-
-            <div style={{
-              fontFamily: "'Lato', sans-serif",
-              fontSize: "0.8rem",
-              color: T.violet,
-              opacity: 0.65,
-              marginTop: "12px",
-              letterSpacing: "0.1em",
-            }}>
-              {age} candle{age !== 1 ? "s" : ""} for {age} wonderful year{age !== 1 ? "s" : ""}
-            </div>
+ 
           </div>
         </Reveal>
-
+ 
         {/* RIGHT: photo + nav */}
         <Reveal dir="right">
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* photo card */}
             <div key={`photo-${animKey}`} style={{
-              background: `linear-gradient(135deg, ${T.lilac}88 0%, ${T.lavender}44 100%)`,
-              border: `2px dashed ${T.lavender}`,
+              background: AGE_PHOTOS[age] ? T.cream : `linear-gradient(135deg, ${T.lilac}88 0%, ${T.lavender}44 100%)`,
+              border: AGE_PHOTOS[age] ? `1px solid ${T.lilac}` : `2px dashed ${T.lavender}`,
               borderRadius: "20px",
               aspectRatio: "4/3",
               display: "flex",
@@ -555,32 +553,32 @@ function AgeCarousel() {
               overflow: "hidden",
               animation: `${slideAnim} 0.4s cubic-bezier(0.25,0.46,0.45,0.94) forwards`,
             }}>
-              {/* age watermark */}
-              <div style={{
-                position: "absolute",
-                bottom: "12px",
-                left: "16px",
-                fontFamily: "'Playfair Display', serif",
-                fontWeight: 900,
-                fontSize: "4rem",
-                color: T.lavender,
-                opacity: 0.18,
-                lineHeight: 1,
-                userSelect: "none",
-              }}>
-                {age}
-              </div>
-
-              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke={T.lavender} strokeWidth="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="3" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
-              <span style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.85rem", color: T.violet, opacity: 0.7, letterSpacing: "0.05em" }}>
-                Age {age}
-              </span>
+              {AGE_PHOTOS[age] ? (
+                <img
+                  src={AGE_PHOTOS[age]}
+                  alt={`Age ${age}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              ) : (
+                <>
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke={T.lavender} strokeWidth="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="3" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <path d="M21 15l-5-5L5 21" />
+                  </svg>
+                  <span style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.85rem", color: T.violet, opacity: 0.7, letterSpacing: "0.05em" }}>
+                    Age {age}
+                  </span>
+                </>
+              )}
+ 
             </div>
-
+ 
             {/* nav controls */}
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <button
@@ -603,7 +601,7 @@ function AgeCarousel() {
               >
                 ←
               </button>
-
+ 
               {/* dot track */}
               <div style={{ flex: 1, display: "flex", gap: "5px", flexWrap: "wrap", justifyContent: "center" }}>
                 {AGES.map((_, i) => (
@@ -625,7 +623,7 @@ function AgeCarousel() {
                   />
                 ))}
               </div>
-
+ 
               <button
                 onClick={next}
                 aria-label="Next year"
@@ -647,7 +645,7 @@ function AgeCarousel() {
                 →
               </button>
             </div>
-
+ 
             {/* keyboard hint */}
             <div style={{ textAlign: "center", fontFamily: "'Lato', sans-serif", fontSize: "0.72rem", color: T.violet, opacity: 0.45, letterSpacing: "0.05em" }}>
               use ← → arrow keys too
@@ -655,10 +653,10 @@ function AgeCarousel() {
           </div>
         </Reveal>
       </div>
-
+ 
       {/* keyboard nav */}
       <KeyboardNav onPrev={prev} onNext={next} />
-
+ 
       <style>{`
         @media (max-width: 640px) {
           .carousel-grid { grid-template-columns: 1fr !important; }
@@ -667,7 +665,7 @@ function AgeCarousel() {
     </section>
   );
 }
-
+ 
 function KeyboardNav({ onPrev, onNext }) {
   useEffect(() => {
     const handler = (e) => {
@@ -682,11 +680,9 @@ function KeyboardNav({ onPrev, onNext }) {
 
 /* ─────────── Photo placeholder ─────────── */
 function PhotoSlot({ label = "Add a photo here" }) {
-  const [open, setOpen] = useState(false);
   return (
     <>
       <div
-        onClick={() => setOpen(true)}
         style={{
           background: `linear-gradient(135deg, ${T.lilac}88 0%, ${T.lavender}44 100%)`,
           border: `2px dashed ${T.lavender}`,
@@ -704,8 +700,6 @@ function PhotoSlot({ label = "Add a photo here" }) {
           cursor: "pointer",
           transition: "transform 0.25s ease, border-color 0.25s ease",
         }}
-        onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.borderColor = T.blush; }}
-        onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = T.lavender; }}
       >
         <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke={T.lavender} strokeWidth="1.5">
           <rect x="3" y="3" width="18" height="18" rx="3" />
@@ -714,46 +708,16 @@ function PhotoSlot({ label = "Add a photo here" }) {
         </svg>
         <span style={{ opacity: 0.8 }}>{label}</span>
       </div>
-
-      <GlassModal open={open} onClose={() => setOpen(false)}>
-        <div style={{
-          background: `linear-gradient(135deg, ${T.lilac}aa 0%, ${T.lavender}55 100%)`,
-          border: `2px dashed ${T.lavender}`,
-          borderRadius: "18px",
-          aspectRatio: "4/3",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "12px",
-          color: T.violet,
-          marginBottom: "20px",
-        }}>
-          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke={T.violet} strokeWidth="1.5">
-            <rect x="3" y="3" width="18" height="18" rx="3" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <path d="M21 15l-5-5L5 21" />
-          </svg>
-          <span style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.9rem", opacity: 0.85 }}>Drop the real photo in here</span>
-        </div>
-        <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.3rem", color: T.deep, margin: "0 0 8px", textAlign: "center" }}>
-          {label}
-        </h3>
-        <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.9rem", color: T.violet, opacity: 0.7, textAlign: "center", margin: 0 }}>
-          Tap to preview once a photo is added here.
-        </p>
-      </GlassModal>
     </>
   );
 }
 
 /* ─────────── Comment placeholder ─────────── */
-function CommentSlot({ name = "Someone special", placeholder = "Leave a birthday message here…" }) {
+function CommentSlot({ pic = null, name = "Someone special", date = "Today", placeholder = "Leave a birthday message here…" }) {
   const [open, setOpen] = useState(false);
   return (
     <>
       <div
-        onClick={() => setOpen(true)}
         style={{
           background: `linear-gradient(135deg, ${T.white} 0%, ${T.cream} 100%)`,
           borderRadius: "20px",
@@ -764,50 +728,42 @@ function CommentSlot({ name = "Someone special", placeholder = "Leave a birthday
           cursor: "pointer",
           transition: "transform 0.25s ease, box-shadow 0.25s ease",
         }}
-        onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 10px 32px ${T.lavender}55`; }}
-        onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 4px 24px ${T.lavender}33`; }}
       >
         <Flower size={28} cx={T.blush} cc={T.gold} style={{ position: "absolute", top: -12, right: 20 }} />
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
-          <div style={{
-            width: "42px", height: "42px", borderRadius: "50%",
-            background: `linear-gradient(135deg, ${T.lavender}, ${T.blush})`,
-            border: `2px solid ${T.white}`,
-            boxShadow: `0 2px 8px ${T.lavender}66`,
-            flexShrink: 0,
-          }} />
+          {pic ? (
+            <img
+              src={pic}
+              alt={name}
+              style={{
+                width: "60px", height: "60px", borderRadius: "50%",
+                objectFit: "cover",
+                border: `2px solid ${T.white}`,
+                boxShadow: `0 2px 8px ${T.lavender}66`,
+                flexShrink: 0,
+              }}
+            />
+          ) : (
+            <div style={{
+              width: "42px", height: "42px", borderRadius: "50%",
+              background: `linear-gradient(135deg, ${T.lavender}, ${T.blush})`,
+              border: `2px solid ${T.white}`,
+              boxShadow: `0 2px 8px ${T.lavender}66`,
+              flexShrink: 0,
+            }} />
+          )}
           <div>
             <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, color: T.deep, fontSize: "1rem" }}>{name}</div>
-            <div style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.75rem", color: T.violet, opacity: 0.7 }}>Birthday wish</div>
+            <div style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.75rem", color: T.violet, opacity: 0.7, textAlign: "left" }}>{date}</div>
           </div>
         </div>
         <p style={{ fontFamily: "'Lato', sans-serif", color: T.violet, opacity: 0.55, fontStyle: "italic", lineHeight: 1.7, margin: 0, fontSize: "0.95rem" }}>
           {placeholder}
         </p>
       </div>
-
-      <GlassModal open={open} onClose={() => setOpen(false)}>
-        <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "20px" }}>
-          <div style={{
-            width: "56px", height: "56px", borderRadius: "50%",
-            background: `linear-gradient(135deg, ${T.lavender}, ${T.blush})`,
-            border: `2px solid ${T.white}`,
-            boxShadow: `0 2px 12px ${T.lavender}66`,
-            flexShrink: 0,
-          }} />
-          <div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, color: T.deep, fontSize: "1.2rem" }}>{name}</div>
-            <div style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.78rem", color: T.violet, opacity: 0.7 }}>Birthday wish</div>
-          </div>
-        </div>
-        <p style={{ fontFamily: "'Lato', sans-serif", color: T.violet, opacity: 0.7, fontStyle: "italic", lineHeight: 1.8, margin: 0, fontSize: "1.05rem" }}>
-          {placeholder}
-        </p>
-      </GlassModal>
     </>
   );
 }
-
 /* ─────────── Divider ─────────── */
 function Divider() {
   return (
@@ -969,18 +925,15 @@ function Hero() {
       ))}
       <div style={{ position: "relative", zIndex: 2 }}>
         <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.8rem", letterSpacing:"0.35em", textTransform:"uppercase", color:T.violet, marginBottom:"20px", opacity:0.85 }}>
-          ✦ A special celebration ✦
+          June 19, 2026
         </div>
-        <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(3.2rem,10vw,7.5rem)", fontWeight:900, lineHeight:1.05, margin:"0 0 10px", background:`linear-gradient(135deg,${T.deep},${T.violet},${T.lavender})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Happy</h1>
-        <h1 style={{ fontFamily:"'Playfair Display',serif", fontStyle:"italic", fontSize:"clamp(3.5rem,11vw,8rem)", fontWeight:700, lineHeight:1.05, margin:"0 0 10px", background:`linear-gradient(135deg,${T.violet},${T.lavender},${T.blush})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Birthday</h1>
-        <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(2.8rem,9vw,6.5rem)", fontWeight:900, lineHeight:1.1, margin:"0 0 36px", background:`linear-gradient(135deg,${T.lavender},${T.deep})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>to you! 🎂</h1>
-        <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, fontSize:"clamp(1rem,2.5vw,1.3rem)", color:T.violet, maxWidth:"480px", margin:"0 auto 48px", lineHeight:1.75 }}>
-          A page made with love, flowers, and way too much ice cream — just for you.
+        <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(3.2rem,10vw,7.5rem)", fontWeight:900, lineHeight:1.25, margin:"0 0 10px", background:`linear-gradient(135deg,${T.deep},${T.violet},${T.lavender})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Happy</h1>
+        <h1 style={{ fontFamily:"'Playfair Display',serif", fontStyle:"italic", fontSize:"clamp(3.5rem,11vw,8rem)", fontWeight:700, lineHeight:1.25, margin:"0 0 10px", background:`linear-gradient(135deg,${T.violet},${T.lavender},${T.blush})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Birthday</h1>
+        <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(2.8rem,9vw,6.5rem)", fontWeight:900, lineHeight:1.25, margin:"0 0 36px", background:`linear-gradient(135deg,${T.lavender},${T.deep})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>janice!</h1>
+        <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, fontSize:"clamp(1rem,2.5vw,1.3rem)", color:T.violet, maxWidth:"500px", margin:"0 auto 48px", lineHeight:1.75 }}>
+        here's some more content for you to doomscroll
         </p>
         <div style={{ display:"flex", gap:"20px", justifyContent:"center", flexWrap:"wrap" }}>
-          <IceCream flavor="strawberry" size={72} />
-          <IceCream flavor="lavender"   size={72} />
-          <IceCream flavor="vanilla"    size={72} />
         </div>
         <div style={{ marginTop:"60px", display:"flex", flexDirection:"column", alignItems:"center", gap:"6px", opacity:0.55 }}>
           <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.75rem", letterSpacing:"0.2em", color:T.violet, textTransform:"uppercase" }}>Scroll down</div>
@@ -1043,61 +996,30 @@ function Memories() {
   );
 }
 
-/* ─────────── ICE CREAM ─────────── */
-function IceCreamSection() {
-  const items = [
-    { flavor:"strawberry", name:"Strawberry Bliss",  desc:"Sweet, rosy, and impossible to resist — just like you." },
-    { flavor:"lavender",   name:"Lavender Dream",    desc:"Soft, purple, and magical. Your signature flavour." },
-    { flavor:"vanilla",    name:"Golden Vanilla",    desc:"Classic and timeless. The perfect kind of sweetness." },
-  ];
-  return (
-    <section style={{ padding:"100px 24px", background:`linear-gradient(180deg,transparent 0%,${T.lilac}44 30%,${T.cream} 60%,${T.lilac}44 100%)`, position:"relative", zIndex:1 }}>
-      <div style={{ maxWidth:"900px", margin:"0 auto", textAlign:"center" }}>
-        <Reveal>
-          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginBottom:"16px", opacity:0.75 }}>✦ sweet treats ✦</div>
-          <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.9rem,4.5vw,3rem)", fontWeight:700, color:T.deep, margin:"0 0 12px" }}>Your flavours of the year</h2>
-          <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, color:T.violet, fontSize:"1.05rem", lineHeight:1.7, maxWidth:"440px", margin:"0 auto 60px", opacity:0.85 }}>Because every birthday deserves all the scoops.</p>
-        </Reveal>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:"36px", justifyItems:"center" }}>
-          {items.map((item,i) => (
-            <Reveal key={i} delay={i*0.12} dir="up">
-              <div style={{ background:T.white, borderRadius:"28px", padding:"40px 28px 32px", border:`1px solid ${T.lilac}`, boxShadow:`0 8px 40px ${T.lavender}28`, width:"100%", textAlign:"center", transition:"transform 0.3s ease,box-shadow 0.3s ease" }}
-                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-8px)";e.currentTarget.style.boxShadow=`0 18px 50px ${T.lavender}44`;}}
-                onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=`0 8px 40px ${T.lavender}28`;}}>
-                <div style={{ display:"flex", justifyContent:"center", marginBottom:"20px" }}>
-                  <IceCream flavor={item.flavor} size={70} />
-                </div>
-                <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:"1.25rem", fontWeight:700, color:T.deep, margin:"0 0 12px" }}>{item.name}</h3>
-                <p style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.9rem", color:T.violet, opacity:0.8, lineHeight:1.65, margin:0 }}>{item.desc}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
+import finPic from './pics/fin.jpg';
+import hpPic from './pics/hp.jpg';
+import ratPic from './pics/rat.jpg';
+import iphonePic from './pics/iphone.jpg';
 /* ─────────── MESSAGES ─────────── */
 function Messages() {
   const slots = [
-    { name:"Your bestie",      placeholder:"Write the most heartfelt thing you can think of here…" },
-    { name:"Mum & Dad",        placeholder:"All the love from home — fill this in!" },
-    { name:"Add your message", placeholder:"Your birthday wish goes right here…" },
-    { name:"A secret admirer", placeholder:"Something sweet and maybe a little mysterious?" },
+    { pic:iphonePic, name:"First iPhone", date:"January 9, 2007", placeholder:"yea lemme see that screen time buddy" },
+    { pic:ratPic, name:"Ratatouille", date:"June 29, 2007", placeholder:"he looks just like you too!" },
+    { pic:hpPic, name:"Last Harry Potter book", date:"July 21, 2007", placeholder:"Uncle Potter and the Deathly Hallows" },
+    { pic:finPic, name:"Subprime mortgage crisis", date:"Late 2007", placeholder:"why didnt u buy the dip" },
   ];
   return (
     <section style={{ padding:"100px 24px", maxWidth:"860px", margin:"0 auto", position:"relative", zIndex:1 }}>
       <Reveal>
         <div style={{ textAlign:"center", marginBottom:"60px" }}>
-          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginBottom:"16px", opacity:0.75 }}>✦ birthday messages ✦</div>
-          <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.9rem,4.5vw,3rem)", fontWeight:700, color:T.deep, margin:0 }}>Words from the heart</h2>
+          <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.9rem,4.5vw,3rem)", fontWeight:700, color:T.deep, margin:0 }}>Other things that are old</h2>
+          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginTop:"16px", opacity:0.75 }}>just like you fr</div>
         </div>
       </Reveal>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:"28px" }}>
         {slots.map((slot,i) => (
           <Reveal key={i} delay={i*0.1} dir={i%2===0?"left":"right"}>
-            <CommentSlot name={slot.name} placeholder={slot.placeholder} />
+            <CommentSlot pic={slot.pic} name={slot.name} date={slot.date} placeholder={slot.placeholder} />
           </Reveal>
         ))}
       </div>
@@ -1115,11 +1037,8 @@ function Footer() {
             <Flower key={i} size={36+(i===2?10:0)} cx={c} cc={i===2?T.white:T.gold} style={{ opacity:0.7 }} />
           ))}
         </div>
-        <h3 style={{ fontFamily:"'Playfair Display',serif", fontStyle:"italic", fontSize:"clamp(1.5rem,4vw,2.4rem)", fontWeight:400, color:T.cream, margin:"0 0 16px" }}>
-          "Here's to you — always and forever."
-        </h3>
         <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, color:T.lavender, fontSize:"0.95rem", opacity:0.8, margin:"0 0 40px", letterSpacing:"0.05em" }}>
-          Made with 💜 flowers & ice cream
+          Made with 💜 & claude sonnet 4.6
         </p>
         <div style={{ width:"60px", height:"1px", background:T.lavender, margin:"0 auto", opacity:0.4 }} />
       </Reveal>
@@ -1156,7 +1075,6 @@ export default function App() {
       <About />
       <AgeCarousel />
       <Memories />
-      <IceCreamSection />
       <Messages />
       <Footer />
     </div>
