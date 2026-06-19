@@ -276,13 +276,12 @@ const CANDLE_META = Array.from({ length: MAX_CANDLES }, (_, i) => {
 
 function Candle({ color, isNew, index, animKey }) {
   const meta = CANDLE_META[index];
-  const candleH = 26;
   return (
     // Outer wrapper: rotates the whole candle (body+flame) around its base
     <div
       key={`${animKey}-${index}`}
       style={{
-        width: "10px",
+        width: "clamp(4px, 1.3vw, 10px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -298,8 +297,8 @@ function Candle({ color, isNew, index, animKey }) {
     >
       {/* flame */}
       <div style={{
-        width: "12px",
-        height: "16px",
+        width: "clamp(5px, 1.6vw, 12px)",
+        height: "clamp(7px, 2vw, 16px)",
         position: "relative",
         display: "flex",
         justifyContent: "center",
@@ -310,8 +309,8 @@ function Candle({ color, isNew, index, animKey }) {
         <div style={{
           position: "absolute",
           bottom: 0,
-          width: "10px",
-          height: "15px",
+          width: "83%",
+          height: "94%",
           borderRadius: "50% 50% 30% 30% / 60% 60% 40% 40%",
           background: "#FFA500",
           opacity: 0.9,
@@ -321,9 +320,9 @@ function Candle({ color, isNew, index, animKey }) {
         {/* inner flame */}
         <div style={{
           position: "absolute",
-          bottom: "2px",
-          width: "6px",
-          height: "10px",
+          bottom: "12%",
+          width: "50%",
+          height: "62%",
           borderRadius: "50% 50% 30% 30% / 60% 60% 40% 40%",
           background: "#FFE55C",
           opacity: 0.95,
@@ -332,11 +331,11 @@ function Candle({ color, isNew, index, animKey }) {
         }} />
       </div>
       {/* wick */}
-      <div style={{ width: "1.5px", height: "5px", background: "#666", flexShrink: 0 }} />
+      <div style={{ width: "1.5px", height: "clamp(3px, 0.8vw, 5px)", background: "#666", flexShrink: 0 }} />
       {/* candle body */}
       <div style={{
-        width: "10px",
-        height: `${candleH}px`,
+        width: "100%",
+        height: "clamp(16px, 4.5vw, 26px)",
         background: color,
         borderRadius: "2px 2px 1px 1px",
         flexShrink: 0,
@@ -346,8 +345,8 @@ function Candle({ color, isNew, index, animKey }) {
         overflow: "hidden",
       }}>
         {/* two white stripes */}
-        <div style={{ position:"absolute", left:0, right:0, top:"5px",  height:"2px", background:"rgba(255,255,255,0.45)", borderRadius:"1px" }} />
-        <div style={{ position:"absolute", left:0, right:0, top:"11px", height:"2px", background:"rgba(255,255,255,0.45)", borderRadius:"1px" }} />
+        <div style={{ position:"absolute", left:0, right:0, top:"22%",  height:"2px", background:"rgba(255,255,255,0.45)", borderRadius:"1px" }} />
+        <div style={{ position:"absolute", left:0, right:0, top:"46%", height:"2px", background:"rgba(255,255,255,0.45)", borderRadius:"1px" }} />
       </div>
     </div>
   );
@@ -370,7 +369,7 @@ function BirthdayCake({ candleCount, animKey }) {
       <div style={{ position:"absolute", top:0, left:0, right:0, display:"flex", justifyContent:"space-evenly", pointerEvents:"none" }}>
         {Array.from({length: count}, (_,i) => (
           <div key={i} style={{
-            width: "7px",
+            width: "6%",
             height: `${8 + Math.sin(i * 1.9) * 3}px`,
             background: color,
             borderRadius: "0 0 4px 4px",
@@ -386,58 +385,62 @@ function BirthdayCake({ candleCount, animKey }) {
     return (
       <div style={{ display:"flex", justifyContent:"space-evenly", alignItems:"center", height:"100%", paddingTop:"12px" }}>
         {colors.map((c,i) => (
-          <div key={i} style={{ width:"7px", height:"7px", borderRadius:"50%", background:c, opacity:0.9 }} />
+          <div key={i} style={{ width:"clamp(5px,1.6vw,7px)", height:"clamp(5px,1.6vw,7px)", borderRadius:"50%", background:c, opacity:0.9, flexShrink:0 }} />
         ))}
       </div>
     );
   }
 
   return (
-    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:0, userSelect:"none" }}>
+    // Outer wrapper scales the whole cake fluidly: fills its parent up to a sensible max width
+    <div style={{ width: "100%", maxWidth: "230px", margin: "0 auto", userSelect: "none" }}>
+      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:0, width: "100%" }}>
 
-      {/* candle row — sits above the cake */}
-      <div style={{
-        width: "160px",
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "flex-end",
-        minHeight: "60px",
-        paddingBottom: "2px",
-        overflow: "visible",
-        position: "relative",
-        zIndex: 2,
-      }}>
-        {Array.from({ length: MAX_CANDLES }, (_, i) => (
-          <div key={i} style={{
-            opacity: i < candleCount ? 1 : 0,
-            transition: "opacity 0.1s",
-            display: "flex",
-            alignItems: "flex-end",
-          }}>
-            <Candle
-              color={CANDLE_COLORS[i % CANDLE_COLORS.length]}
-              isNew={i === candleCount - 1}
-              index={i}
-              animKey={animKey}
-            />
-          </div>
-        ))}
+        {/* candle row — sits above the cake, width matches top tier */}
+        <div style={{
+          width: "69.5%",
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "flex-end",
+          minHeight: "clamp(38px, 11vw, 60px)",
+          paddingBottom: "2px",
+          overflow: "visible",
+          position: "relative",
+          zIndex: 2,
+        }}>
+          {Array.from({ length: MAX_CANDLES }, (_, i) => (
+            <div key={i} style={{
+              opacity: i < candleCount ? 1 : 0,
+              transition: "opacity 0.1s",
+              display: "flex",
+              alignItems: "flex-end",
+              minWidth: 0,
+            }}>
+              <Candle
+                color={CANDLE_COLORS[i % CANDLE_COLORS.length]}
+                isNew={i === candleCount - 1}
+                index={i}
+                animKey={animKey}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* tier 2 — top */}
+        <div style={{ ...tierBase, width:"69.5%", height:"clamp(28px,8vw,44px)", background:"#9B72CF", zIndex:1 }}>
+          <Drips count={7} color="white" />
+          <Dots colors={DOTS_T2} />
+        </div>
+
+        {/* tier 1 — bottom */}
+        <div style={{ ...tierBase, width:"91%", height:"clamp(34px,9.5vw,52px)", background:"#7B4FA8", marginTop:"-2px", zIndex:0 }}>
+          <Drips count={9} color="white" />
+          <Dots colors={DOTS_T1} />
+        </div>
+
+        {/* plate */}
+        <div style={{ width:"100%", height:"clamp(9px,2.5vw,14px)", background:"#E8D5F5", borderRadius:"50%", marginTop:"2px", opacity:0.7 }} />
       </div>
-
-      {/* tier 2 — top */}
-      <div style={{ ...tierBase, width:"160px", height:"44px", background:"#9B72CF", zIndex:1 }}>
-        <Drips count={7} color="white" />
-        <Dots colors={DOTS_T2} />
-      </div>
-
-      {/* tier 1 — bottom */}
-      <div style={{ ...tierBase, width:"210px", height:"52px", background:"#7B4FA8", marginTop:"-2px", zIndex:0 }}>
-        <Drips count={9} color="white" />
-        <Dots colors={DOTS_T1} />
-      </div>
-
-      {/* plate */}
-      <div style={{ width:"230px", height:"14px", background:"#E8D5F5", borderRadius:"50%", marginTop:"2px", opacity:0.7 }} />
     </div>
   );
 }
@@ -458,23 +461,23 @@ import eleven from "./Pic1/11_IMG_9586.jpg";
 import twelve from "./Pic1/12_DSCN2247.jpg";
 
 /* ─────────── AGE CAROUSEL ─────────── */
-const AGES = Array.from({ length: 14 }, (_, i) => i + 1); // ages 1–20, change as needed
+const AGES = Array.from({ length: 14 }, (_, i) => i + 4); // ages 1–20, change as needed
 
 const AGE_PHOTOS = {
-  1: pk,
-  2: kg,
-  3: one,
-  4: two,
-  5: three,
-  6: four,
-  7: five,
-  8: six,
-  9: seven,
-  10: eight,
-  11: nine,
-  12: ten,
-  13: eleven,
-  14: twelve,
+  4: pk,
+  5: kg,
+  6: one,
+  7: two,
+  8: three,
+  9: four,
+  10: five,
+  11: six,
+  12: seven,
+  13: eight,
+  14: nine,
+  15: ten,
+  16: eleven,
+  17: twelve,
 };
  
 function AgeCarousel() {
@@ -499,19 +502,17 @@ function AgeCarousel() {
     <section style={{ padding: "100px 24px 80px", position: "relative", zIndex: 1 }}>
       <Reveal>
         <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <div style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.78rem", letterSpacing: "0.3em", textTransform: "uppercase", color: T.violet, marginBottom: "16px", opacity: 0.75 }}>
-            ✦ through the years ✦
-          </div>
+          
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.9rem, 4.5vw, 3rem)", fontWeight: 700, color: T.deep, margin: 0 }}>
-            Chopped since '07
+            Road to unc status
           </h2>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300, color: T.violet, fontSize: "1rem", marginTop: "12px", opacity: 0.8 }}>
-            Arrow through the years — a candle lights up for each one.
-          </p>
+          <div style={{ fontFamily: "'Lato', sans-serif", fontSize: "0.78rem", letterSpacing: "0.3em", textTransform: "uppercase", color: T.violet, marginTop: "16px", opacity: 0.75 }}>
+            Chopped since '07
+          </div>
         </div>
       </Reveal>
  
-      <div style={{
+      <div className="carousel-grid" style={{
         maxWidth: "900px",
         margin: "0 auto",
         display: "grid",
@@ -524,11 +525,13 @@ function AgeCarousel() {
           <div style={{
             background: `linear-gradient(160deg, ${T.cream} 0%, ${T.lilac} 100%)`,
             borderRadius: "28px",
-            padding: "36px 24px 28px",
+            padding: "clamp(24px, 6vw, 36px) clamp(14px, 4vw, 24px) clamp(20px, 5vw, 28px)",
             border: `1px solid ${T.lilac}`,
             boxShadow: `0 8px 40px ${T.lavender}28`,
             textAlign: "center",
             position: "relative",
+            width: "100%",
+            boxSizing: "border-box",
           }}> 
             <BirthdayCake candleCount={age} animKey={animKey} />
  
@@ -585,7 +588,7 @@ function AgeCarousel() {
                 onClick={prev}
                 aria-label="Previous year"
                 style={{
-                  width: "48px", height: "48px", borderRadius: "50%",
+                  width: "clamp(40px, 11vw, 48px)", height: "clamp(40px, 11vw, 48px)", borderRadius: "50%",
                   border: `1.5px solid ${T.lavender}`,
                   background: T.white,
                   color: T.violet,
@@ -628,7 +631,7 @@ function AgeCarousel() {
                 onClick={next}
                 aria-label="Next year"
                 style={{
-                  width: "48px", height: "48px", borderRadius: "50%",
+                  width: "clamp(40px, 11vw, 48px)", height: "clamp(40px, 11vw, 48px)", borderRadius: "50%",
                   border: `1.5px solid ${T.lavender}`,
                   background: T.white,
                   color: T.violet,
@@ -659,7 +662,7 @@ function AgeCarousel() {
  
       <style>{`
         @media (max-width: 640px) {
-          .carousel-grid { grid-template-columns: 1fr !important; }
+          .carousel-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
         }
       `}</style>
     </section>
@@ -929,7 +932,7 @@ function Hero() {
         </div>
         <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(3.2rem,10vw,7.5rem)", fontWeight:900, lineHeight:1.25, margin:"0 0 10px", background:`linear-gradient(135deg,${T.deep},${T.violet},${T.lavender})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Happy</h1>
         <h1 style={{ fontFamily:"'Playfair Display',serif", fontStyle:"italic", fontSize:"clamp(3.5rem,11vw,8rem)", fontWeight:700, lineHeight:1.25, margin:"0 0 10px", background:`linear-gradient(135deg,${T.violet},${T.lavender},${T.blush})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Birthday</h1>
-        <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(2.8rem,9vw,6.5rem)", fontWeight:900, lineHeight:1.25, margin:"0 0 36px", background:`linear-gradient(135deg,${T.lavender},${T.deep})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>janice!</h1>
+        <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(2.8rem,9vw,6.5rem)", fontWeight:900, lineHeight:1.25, margin:"0 0 36px", background:`linear-gradient(135deg,${T.lavender},${T.deep})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Janice!</h1>
         <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, fontSize:"clamp(1rem,2.5vw,1.3rem)", color:T.violet, maxWidth:"500px", margin:"0 auto 48px", lineHeight:1.75 }}>
         here's some more content for you to doomscroll
         </p>
@@ -951,22 +954,17 @@ function About() {
       <Divider />
       <div style={{ margin:"60px 0" }}>
         <Reveal>
-          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginBottom:"16px", opacity:0.75 }}>✦ the birthday girl ✦</div>
+          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginBottom:"16px", opacity:0.75 }}>the birthday girl</div>
           <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(2rem,5vw,3.4rem)", fontWeight:700, color:T.deep, margin:"0 0 24px", lineHeight:1.2 }}>
-            Here's to the most<br /><em style={{ color:T.violet }}>wonderful</em> sister
+            A <em style={{ color:T.violet }}>bad</em> driver and a <br /><em style={{ color:T.violet }}>worse</em> passenger.
           </h2>
         </Reveal>
         <Reveal delay={0.15}>
           <p style={{ fontFamily:"'Lato',sans-serif", fontWeight:300, fontSize:"1.15rem", color:T.violet, lineHeight:1.85, maxWidth:"580px", margin:"0 auto 32px", opacity:0.9 }}>
-            Today is all about you — your laughter, your kindness, and all the little things that make you so incredibly you. May this year be filled with flowers in bloom, sweet moments, and every colour of purple the sky can hold. 💜
+            You're an ok sister i guess. Can't believe you're already this old. Don't forget that $50 you still owe me.
           </p>
         </Reveal>
         <Reveal delay={0.25}>
-          <div style={{ display:"inline-flex", gap:"12px", flexWrap:"wrap", justifyContent:"center", marginTop:"8px" }}>
-            {["🌸 Flower lover","💜 Purple queen","🍦 Ice cream addict","✨ Pure magic"].map(tag => (
-              <span key={tag} style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.85rem", background:`linear-gradient(135deg,${T.lilac},${T.cream})`, color:T.violet, border:`1px solid ${T.lavender}88`, padding:"7px 18px", borderRadius:"50px", letterSpacing:"0.04em" }}>{tag}</span>
-            ))}
-          </div>
         </Reveal>
       </div>
       <Divider />
@@ -975,26 +973,6 @@ function About() {
 }
 
 /* ─────────── MEMORIES ─────────── */
-function Memories() {
-  const photos = ["Our favourite memory","That one adventure","Laughing so hard it hurt","A perfect day together","Pure joy","Sisters forever"];
-  return (
-    <section style={{ padding:"80px 24px", maxWidth:"1100px", margin:"0 auto", position:"relative", zIndex:1 }}>
-      <Reveal>
-        <div style={{ textAlign:"center", marginBottom:"60px" }}>
-          <div style={{ fontFamily:"'Lato',sans-serif", fontSize:"0.78rem", letterSpacing:"0.3em", textTransform:"uppercase", color:T.violet, marginBottom:"16px", opacity:0.75 }}>✦ memories ✦</div>
-          <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.9rem,4.5vw,3rem)", fontWeight:700, color:T.deep, margin:0 }}>Our favourite moments</h2>
-        </div>
-      </Reveal>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:"24px" }}>
-        {photos.map((label,i) => (
-          <Reveal key={i} delay={i*0.08} dir={i%2===0?"left":"right"}>
-            <PhotoSlot label={label} />
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 import finPic from './pics/fin.jpg';
 import hpPic from './pics/hp.jpg';
@@ -1067,14 +1045,28 @@ function ScrollProgress() {
 /* ─────────── ROOT ─────────── */
 export default function App() {
   return (
-    <div style={{ background:`linear-gradient(180deg,${T.cream} 0%,${T.white} 30%,${T.cream} 60%,${T.lilac}66 100%)`, minHeight:"100vh", position:"relative" }}>
+    <div style={{
+      background: `linear-gradient(180deg,${T.cream} 0%,${T.white} 30%,${T.cream} 60%,${T.lilac}66 100%)`,
+      minHeight: "100vh",
+      width: "100%",
+      position: "relative",
+      overflowX: "hidden",
+    }}>
       <FontLoader />
+      <style>{`
+        html, body, #root, #__next {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          min-height: 100%;
+          overflow-x: hidden;
+        }
+      `}</style>
       <ScrollProgress />
       <FloatingPetals />
       <Hero />
       <About />
       <AgeCarousel />
-      <Memories />
       <Messages />
       <Footer />
     </div>
